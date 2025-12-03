@@ -54,9 +54,10 @@ type ChatCompletionMessage struct {
 }
 
 type ChatCompletionRequest struct {
-	Model    string                  `json:"model"`
-	Messages []ChatCompletionMessage `json:"messages"`
-	Stream   bool                    `json:"stream"`
+	Model     string                  `json:"model"`
+	Messages  []ChatCompletionMessage `json:"messages"`
+	Stream    bool                    `json:"stream"`
+	ExtraBody map[string]interface{}  `json:"extra_body,omitempty"`
 }
 
 type ChatCompletionResponse struct {
@@ -96,6 +97,11 @@ func (h *AIHandler) GenerateReport(c *gin.Context) {
 			{Role: "user", Content: prompt},
 		},
 		Stream: false,
+		ExtraBody: map[string]interface{}{
+			"thinking": map[string]string{
+				"type": "enabled",
+			},
+		},
 	}
 
 	reqBody, err := json.Marshal(chatReq)
