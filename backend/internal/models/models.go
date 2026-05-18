@@ -76,3 +76,24 @@ type WorkPlan struct {
 	Project   Project `gorm:"foreignKey:ProjectID" json:"project"`
 }
 
+// WorkScheduleTask 工作排期任务（甘特图行）
+type WorkScheduleTask struct {
+	ID            uint      `gorm:"primaryKey" json:"id"`
+	UserID        uint      `gorm:"index" json:"user_id"`
+	TechDirection string    `gorm:"size:16" json:"tech_direction"` // 前端 / 后端 / 测试
+	Color         string    `gorm:"size:16;default:#409eff" json:"color"`
+	Label         string    `gorm:"size:128" json:"label"`
+	StartDate     time.Time `gorm:"type:date" json:"start_date"`
+	EndDate       time.Time `gorm:"type:date" json:"end_date"`
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	User          User `gorm:"foreignKey:UserID" json:"user"`
+}
+
+// WorkScheduleDay 日期类型覆盖（未记录则周六日为节假日）
+type WorkScheduleDay struct {
+	ID        uint      `gorm:"primaryKey" json:"id"`
+	Date      time.Time `gorm:"type:date;uniqueIndex" json:"date"`
+	IsHoliday bool      `gorm:"default:false" json:"is_holiday"`
+}
+

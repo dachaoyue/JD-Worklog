@@ -36,6 +36,7 @@ func main() {
 	acctH := &handlers.AccountHandler{DB: dbConn}
 	usersH := &handlers.UsersHandler{DB: dbConn}
 	aiH := &handlers.AIHandler{DB: dbConn, Cfg: cfg}
+	scheduleH := &handlers.WorkScheduleHandler{DB: dbConn}
 
 	api := r.Group("/api")
 	{
@@ -74,6 +75,13 @@ func main() {
 					admin.POST("/timesheets/backfill", handlers.BackfillTimesheets(dbConn))
 					admin.GET("/timesheets/backfill/history", handlers.GetBackfillHistory(dbConn))
 					admin.DELETE("/timesheets/backfill/:id", handlers.DeleteBackfill(dbConn))
+
+					// 工作排期（甘特图）
+					admin.GET("/work-schedules/board", scheduleH.GetBoard)
+					admin.POST("/work-schedules/tasks", scheduleH.CreateTask)
+					admin.PUT("/work-schedules/tasks/:id", scheduleH.UpdateTask)
+					admin.DELETE("/work-schedules/tasks/:id", scheduleH.DeleteTask)
+					admin.POST("/work-schedules/calendar/toggle", scheduleH.ToggleCalendarDay)
 				}
 				tfa.GET("/projects", projH.List)
 				tfa.GET("/timesheets/mine", tsH.ListMine)

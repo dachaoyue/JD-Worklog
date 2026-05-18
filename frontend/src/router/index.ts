@@ -12,6 +12,7 @@ import Force2FASetup from '../views/Force2FASetup.vue'
 import Login2FA from '../views/Login2FA.vue'
 import AIReport from '../views/AIReport.vue'
 import WorkPlan from '../views/WorkPlan.vue'
+import AdminWorkSchedule from '../views/AdminWorkSchedule.vue'
 
 const router = createRouter({
   history: createWebHistory('/worklog/'),
@@ -33,6 +34,7 @@ const router = createRouter({
     },
     { path: '/ai/report', component: AIReport, meta: { requiresAuth: true } },
     { path: '/work-plan', component: WorkPlan, meta: { requiresAuth: true } },
+    { path: '/admin/work-schedule', component: AdminWorkSchedule, meta: { requiresAuth: true } },
   ]
 })
 

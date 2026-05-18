@@ -13,6 +13,7 @@
           <el-menu-item index="/admin/report">工时报表</el-menu-item>
           <el-menu-item index="/admin/timesheet-backfill">工时补入</el-menu-item>
           <el-menu-item index="/admin/timesheet-backfill-history">补入历史</el-menu-item>
+          <el-menu-item index="/admin/work-schedule">工作排期</el-menu-item>
         </template>
       </el-menu>
     </el-aside>
@@ -26,7 +27,7 @@
         </div>
       </el-header>
       <el-main class="bg-gray-50">
-        <div class="max-w-6xl mx-auto p-4">
+        <div :class="fullWidth ? 'p-4' : 'max-w-6xl mx-auto p-4'">
           <slot />
         </div>
       </el-main>
@@ -37,6 +38,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '../store/auth'
+
+defineProps<{ fullWidth?: boolean }>()
+
 const auth = useAuthStore()
 const { role } = storeToRefs(auth)
 const logout = () => auth.logout()
