@@ -7,14 +7,16 @@ import (
 )
 
 type Config struct {
-	DBHost         string
-	DBPort         string
-	DBUser         string
-	DBPass         string
-	DBName         string
-	JWTSecret      string
-	CORSOrigins    []string
-	DeepseekAPIKey string
+	DBHost          string
+	DBPort          string
+	DBUser          string
+	DBPass          string
+	DBName          string
+	JWTSecret       string
+	CORSOrigins     []string
+	DeepseekAPIKey  string
+	DeepseekAPIBase string
+	DeepseekModel   string
 }
 
 func Load() *Config {
@@ -26,9 +28,12 @@ func Load() *Config {
 		DBName:         getEnv("DB_NAME", "worklog"),
 		JWTSecret:      getEnv("JWT_SECRET", "devsecretchangeit"),
 		CORSOrigins:    splitCsv(getEnv("CORS_ORIGINS", "http://localhost:5173")),
-		DeepseekAPIKey: getEnv("DEEPSEEK_API_KEY", ""),
+		DeepseekAPIKey:  getEnv("DEEPSEEK_API_KEY", ""),
+		DeepseekAPIBase: getEnv("DEEPSEEK_API_BASE", "https://ai-gateway.qianxin-inc.cn"),
+		DeepseekModel:   getEnv("DEEPSEEK_MODEL", "glm-5.1"),
 	}
-	log.Printf("config loaded: %+v", *c)
+	log.Printf("config loaded: db=%s@%s:%s/%s ai_base=%s ai_model=%s ai_key_set=%v",
+		c.DBUser, c.DBHost, c.DBPort, c.DBName, c.DeepseekAPIBase, c.DeepseekModel, c.DeepseekAPIKey != "")
 	return c
 }
 
