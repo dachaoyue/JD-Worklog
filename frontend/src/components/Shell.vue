@@ -6,6 +6,7 @@
         <el-menu-item index="/timesheet">录入工时</el-menu-item>
         <el-menu-item index="/ai/report">AI生成日报</el-menu-item>
         <el-menu-item index="/work-plan">工作计划</el-menu-item>
+        <el-menu-item index="/work-schedule">工作排期</el-menu-item>
         <el-menu-item index="/account/security">账号安全</el-menu-item>
         <template v-if="role === 'admin'">
           <el-menu-item index="/admin/projects">项目管理</el-menu-item>
@@ -13,7 +14,6 @@
           <el-menu-item index="/admin/report">工时报表</el-menu-item>
           <el-menu-item index="/admin/timesheet-backfill">工时补入</el-menu-item>
           <el-menu-item index="/admin/timesheet-backfill-history">补入历史</el-menu-item>
-          <el-menu-item index="/admin/work-schedule">工作排期</el-menu-item>
         </template>
       </el-menu>
     </el-aside>

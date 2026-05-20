@@ -75,14 +75,16 @@ func main() {
 					admin.POST("/timesheets/backfill", handlers.BackfillTimesheets(dbConn))
 					admin.GET("/timesheets/backfill/history", handlers.GetBackfillHistory(dbConn))
 					admin.DELETE("/timesheets/backfill/:id", handlers.DeleteBackfill(dbConn))
-
-					// 工作排期（甘特图）
-					admin.GET("/work-schedules/board", scheduleH.GetBoard)
-					admin.POST("/work-schedules/tasks", scheduleH.CreateTask)
-					admin.PUT("/work-schedules/tasks/:id", scheduleH.UpdateTask)
-					admin.DELETE("/work-schedules/tasks/:id", scheduleH.DeleteTask)
-					admin.POST("/work-schedules/calendar/toggle", scheduleH.ToggleCalendarDay)
 				}
+
+				// 工作排期（甘特图）— 所有已登录用户可用
+				tfa.GET("/work-schedules/board", scheduleH.GetBoard)
+				tfa.GET("/work-schedules/users", scheduleH.ListUsers)
+				tfa.POST("/work-schedules/tasks", scheduleH.CreateTask)
+				tfa.PUT("/work-schedules/tasks/:id", scheduleH.UpdateTask)
+				tfa.DELETE("/work-schedules/tasks/:id", scheduleH.DeleteTask)
+				tfa.POST("/work-schedules/calendar/toggle", scheduleH.ToggleCalendarDay)
+
 				tfa.GET("/projects", projH.List)
 				tfa.GET("/timesheets/mine", tsH.ListMine)
 				tfa.POST("/timesheets", tsH.Create)

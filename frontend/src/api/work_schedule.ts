@@ -28,8 +28,12 @@ export interface ScheduleBoard {
   project_count: number
 }
 
+export type ScheduleUser = { id: number; username: string; nickname: string }
+
+export const getScheduleUsers = () => http.get<ScheduleUser[]>('/work-schedules/users')
+
 export const getScheduleBoard = (start: string, end: string) =>
-  http.get<ScheduleBoard>('/admin/work-schedules/board', { params: { start, end } })
+  http.get<ScheduleBoard>('/work-schedules/board', { params: { start, end } })
 
 export const createScheduleTask = (data: {
   user_id: number
@@ -38,7 +42,7 @@ export const createScheduleTask = (data: {
   label?: string
   start_date: string
   end_date: string
-}) => http.post<{ id: number }>('/admin/work-schedules/tasks', data)
+}) => http.post<{ id: number }>('/work-schedules/tasks', data)
 
 export const updateScheduleTask = (
   id: number,
@@ -50,9 +54,9 @@ export const updateScheduleTask = (
     start_date: string
     end_date: string
   }>
-) => http.put(`/admin/work-schedules/tasks/${id}`, data)
+) => http.put(`/work-schedules/tasks/${id}`, data)
 
-export const deleteScheduleTask = (id: number) => http.delete(`/admin/work-schedules/tasks/${id}`)
+export const deleteScheduleTask = (id: number) => http.delete(`/work-schedules/tasks/${id}`)
 
 export const toggleScheduleDay = (date: string) =>
-  http.post<{ date: string; is_holiday: boolean }>('/admin/work-schedules/calendar/toggle', { date })
+  http.post<{ date: string; is_holiday: boolean }>('/work-schedules/calendar/toggle', { date })

@@ -77,7 +77,31 @@ func countWorkDays(start, end time.Time, overrides map[string]bool) int {
 	return n
 }
 
-// GET /api/admin/work-schedules/board?start=&end=
+type scheduleUserResp struct {
+	ID       uint   `json:"id"`
+	Username string `json:"username"`
+	Nickname string `json:"nickname"`
+}
+
+// GET /api/work-schedules/users
+func (h *WorkScheduleHandler) ListUsers(c *gin.Context) {
+	var users []models.User
+	if err := h.DB.Order("id asc").Find(&users).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "db"})
+		return
+	}
+	resp := make([]scheduleUserResp, 0, len(users))
+	for _, u := range users {
+		resp = append(resp, scheduleUserResp{
+			ID:       u.ID,
+			Username: u.Username,
+			Nickname: u.Nickname,
+		})
+	}
+	c.JSON(http.StatusOK, resp)
+}
+
+// GET /api/work-schedules/board?start=&end=
 func (h *WorkScheduleHandler) GetBoard(c *gin.Context) {
 	startStr := c.Query("start")
 	endStr := c.Query("end")

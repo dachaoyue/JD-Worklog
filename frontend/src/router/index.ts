@@ -34,7 +34,8 @@ const router = createRouter({
     },
     { path: '/ai/report', component: AIReport, meta: { requiresAuth: true } },
     { path: '/work-plan', component: WorkPlan, meta: { requiresAuth: true } },
-    { path: '/admin/work-schedule', component: AdminWorkSchedule, meta: { requiresAuth: true } },
+    { path: '/work-schedule', component: AdminWorkSchedule, meta: { requiresAuth: true } },
+    { path: '/admin/work-schedule', redirect: '/work-schedule' },
   ]
 })
 

@@ -283,11 +283,11 @@ import { computed, onMounted, ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import Shell from '../components/Shell.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getAllUsers } from '../api/admin'
 import {
   createScheduleTask,
   deleteScheduleTask,
   getScheduleBoard,
+  getScheduleUsers,
   toggleScheduleDay,
   updateScheduleTask,
   type ScheduleBoard,
@@ -639,7 +639,7 @@ const loadBoard = async () => {
 }
 
 const loadUsers = async () => {
-  const { data } = await getAllUsers()
+  const { data } = await getScheduleUsers()
   users.value = data
 }
 
